@@ -1,16 +1,15 @@
 # ALZHEIMER'S DISEASE RECOGNITION SYSTEM
 
 Our mission is to help in identifying Alzheimer's disease efficiently. Upload an MRI image of a brain, and our system will analyze it to detect any signs of diseases. Together, let's protect our elders and ourselves from Alzheimer's Disease!
+### How It Works
+1. **Upload Image:** Go to the **Disease Recognition** page and upload an MRI image of a brain with suspected diseases.
+2. **Analysis:** Our system will process the image using advanced algorithms to identify potential diseases and its severeness.
+3. **Results:** View the results and recommendations for further action.
 
-  ### How It Works
-    1. **Upload Image:** Go to the **Disease Recognition** page and upload an MRI image of a brain with suspected diseases.
-    2. **Analysis:** Our system will process the image using advanced algorithms to identify potential diseases and its severeness.
-    3. **Results:** View the results and recommendations for further action.
-
-  ### Why Choose Us?
-    - **Accuracy:** Our system utilizes CNN learning techniques for accurate disease detection.
-    - **User-Friendly:** Simple and intuitive interface for seamless user experience.
-    - **Fast and Efficient:** Receive results in seconds, allowing for quick decision-making.
+### Why Choose Us?
+- **Accuracy:** Our system utilizes CNN learning techniques for accurate disease detection.
+- **User-Friendly:** Simple and intuitive interface for seamless user experience.
+- **Fast and Efficient:** Receive results in seconds, allowing for quick decision-making.
 
   ### Get Started
     Click on the **Disease Recognition** page in the sidebar to upload an image and experience the power of our Alzheimer's Disease Recognition System!
