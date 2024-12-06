@@ -11,10 +11,10 @@ Our mission is to help in identifying Alzheimer's disease efficiently. Upload an
 - **User-Friendly:** Simple and intuitive interface for seamless user experience.
 - **Fast and Efficient:** Receive results in seconds, allowing for quick decision-making.
 
-  ### Get Started
-    Click on the **Disease Recognition** page in the sidebar to upload an image and experience the power of our Alzheimer's Disease Recognition System!
-  ### About Us
-    Learn more about the project, our team, and our goals on the **About** page.
+### Get Started
+Click on the **Disease Recognition** page in the sidebar to upload an image and experience the power of our Alzheimer's Disease Recognition System!
+### About Us
+Learn more about the project, our team, and our goals on the **About** page.
     
 #### About Dataset
 This dataset comprises a mix of real and synthetic axial MRIs and was developed to rectify the class imbalance in the original Kaggle Alzheimer's dataset, which featured four categories: "No Impairment", "Very Mild Impairment", "Mild Impairment", and "Moderate Impairment". Each category had 100, 70, 28, and 2 patients, respectively, and each patient's brain was sliced into 32 horizontal axial MRIs.
@@ -22,7 +22,7 @@ The MRI images were acquired using a 1.5 Tesla MRI scanner with a T1-weighted se
 However, it is important to note that the synthetic MRIs were not verified by a radiologist. Therefore, any results or indications from this dataset may or may not resemble real-world patient's symptoms or patterns. Moreover, there are no threats to privacy as these synthetic MRIs do not resemble any real-world patients.
 
 1. train (10240 images)
-2. 2. test (1279 images)
+2. test (1279 images)
 
 The train and test directories have 4 subdirectories which classifies the stages of Alzheimer Disease:
 1. Mild Impairment
