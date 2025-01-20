@@ -6,8 +6,9 @@ from keras.preprocessing import image
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import img_to_array, load_img
-from PIL import Image
+from PIL import Image, UnidentifiedImageError
 import os
+import cv2
 
 st.set_page_config(
     page_title="ALZHEIMER'S DISEASE RECOGNITION SYSTEM",
@@ -41,6 +42,29 @@ def predict_single_image(model_path, image_path, class_mapping, target_size=(150
     predicted_class_label = class_mapping[predicted_class_idx]
 
     return predicted_class_label
+
+# Add this function to validate if the uploaded image is likely an MRI image
+def validate_mri_image(image):
+    """
+    Validates if the uploaded image is likely an MRI.
+    
+    Args:
+        image (PIL.Image): The uploaded image.
+        
+    Returns:
+        tuple: (bool, str) - Whether the image is valid and a validation message.
+    """
+    # Check the resolution
+    if image.size[0] < 128 or image.size[1] < 128:
+        return False, "The resolution of the image is too low to be an MRI."
+    
+    # Check the color mode (MRI images are typically grayscale)
+    if image.mode != "L":
+        return False, "The image does not appear to have the appropriate format for an MRI (grayscale or RGB)."
+    
+    # Optional: Add any additional heuristic checks here
+    
+    return True, "The uploaded image appears to be valid."
 
 #st.logo('logo.png',size="large")
 def add_logo(logo_path, width, height):
@@ -130,36 +154,44 @@ However, it is important to note that the synthetic MRIs were not verified by a 
         st.image("swapna.png") 
                
 #Prediction Page
-elif(app_mode=="Disease Recognition"):
-    st.header("Disease Recognition",divider=True)
-    test_image = st.file_uploader("Choose an Image:")
+elif app_mode == "Disease Recognition":
+    st.header("Disease Recognition", divider=True)
+    test_image = st.file_uploader("Choose an Image:", type=["png", "jpg", "jpeg"])
+
     if test_image is not None:
-        image = Image.open(test_image)
-        # Save the file temporarily
-        temp_file_path = "temp_uploaded_image.jpg"
-        with open(temp_file_path, "wb") as f:
-            f.write(test_image.getbuffer())
-        if(st.button("Show Image")):
-            st.image(test_image,width=4,use_column_width=True)
-        #Predict button
-        if(st.button("Predict")):
-            #st.snow()
-            with st.spinner('Predicting Results...'):
-                #st.write("Our Prediction")
-                #result_index = model_prediction(test_image)
-                #st.success(result_index)
-                model_path = 'alzheimer_cnn_model_20thnov.h5'
-                #image_path = 'path/to/uploaded/image.jpg'
-
-                # Define class mapping (obtained from your training dataset)
-                class_mapping = {0: 'Mild Demented', 1: 'Moderate Demented', 2: 'Non Demented', 3: 'Very Mild Demented'}
-
-                predicted_label = predict_single_image('alzheimer_cnn_model_20thnov.h5', temp_file_path, class_mapping)
+        try:
+            # Open the uploaded image
+            image = Image.open(test_image)
             
-                # Display the prediction
-                st.success(f"### Prediction: {predicted_label}")
-            # Optionally delete the temporary file
-        if os.path.exists(temp_file_path):
-            os.remove(temp_file_path)
-
-    
+            # Validate if it's an MRI image
+            is_valid, validation_message = validate_mri_image(image)
+            if not is_valid:
+                st.error(validation_message)
+            else:
+                st.success(validation_message)
+                
+                # Save the file temporarily
+                temp_file_path = "temp_uploaded_image.jpg"
+                with open(temp_file_path, "wb") as f:
+                    f.write(test_image.getbuffer())
+                
+                if st.button("Show Image"):
+                    st.image(image, use_column_width=True)
+                
+                if st.button("Predict"):
+                    with st.spinner("Predicting Results..."):
+                        model_path = "alzheimer_cnn_model_20thnov.h5"
+                        class_mapping = {
+                            0: "Mild Demented",
+                            1: "Moderate Demented",
+                            2: "Non Demented",
+                            3: "Very Mild Demented",
+                        }
+                        predicted_label = predict_single_image(model_path, temp_file_path, class_mapping)
+                        st.success(f"### Prediction: {predicted_label}")
+                
+                # Optionally delete the temporary file
+                if os.path.exists(temp_file_path):
+                    os.remove(temp_file_path)
+        except UnidentifiedImageError:
+            st.error("The uploaded file is not a valid image.")
