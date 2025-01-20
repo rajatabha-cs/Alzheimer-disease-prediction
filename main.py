@@ -8,7 +8,7 @@ from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.image import img_to_array, load_img
 from PIL import Image, UnidentifiedImageError
 import os
-import cv2
+
 
 st.set_page_config(
     page_title="ALZHEIMER'S DISEASE RECOGNITION SYSTEM",
